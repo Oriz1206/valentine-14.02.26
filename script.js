@@ -267,7 +267,7 @@ submitDateButton.addEventListener("click", () => {
     let enteredDate = "";
     dateInputs.forEach(input => enteredDate += input.value);
     // Validate date: dd mm yyyy
-    if (enteredDate === "00000000") {
+    if (enteredDate === "19082023") {
         dateInputs.forEach(input => {
             input.classList.remove("error");
             input.classList.add("success");
