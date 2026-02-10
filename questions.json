@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "question": "Lần đầu mình gặp nhau là ở đâu?",
+    "options": {
+      "A": "Quán cà phê",
+      "B": "Sân bay",
+      "C": "Công viên",
+      "D": "Trường học"
+    },
+    "answer": "B"
+  }
+]
