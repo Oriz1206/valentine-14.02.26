@@ -1,34 +1,462 @@
-html, body {
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-color: #e91e63;
+    --primary-hover: #c2185b;
+    --secondary-color: #2d2dff;
+    --secondary-hover: #1f1faa;
+    --text-color: #fff;
+    --glass-bg: rgba(20, 20, 20, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --font-heading: "Great Vibes", cursive;
+    --font-body: "Nunito", sans-serif;
+}
+
+html,
+body {
     margin: 0 !important;
     padding: 0 !important;
     overflow: hidden;
+    font-family: var(--font-body);
+    background-color: #111;
+    color: var(--text-color);
     cursor: url('./images/pointer.png'), auto;
 }
 
 canvas {
     width: 100%;
-    height: auto;
+    height: 100vh;
+    display: block;
     background: #111;
 }
 
+/* Common Overlay Styles */
+.overlay-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2000;
+    color: var(--text-color);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.4s ease;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Login (Date) Container */
+#loginContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2000;
+    color: var(--text-color);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 50px 40px;
+    box-shadow: var(--glass-shadow);
+}
+
+#loginTitle {
+    margin-bottom: 30px;
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 400;
+    text-shadow: 0 0 15px rgba(233, 30, 99, 0.6);
+    letter-spacing: 1px;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.date-input {
+    width: 40px;
+    height: 50px;
+    font-size: 24px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(233, 30, 99, 0.5);
+    border-radius: 8px;
+    color: white;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.date-input:focus {
+    background: rgba(233, 30, 99, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(233, 30, 99, 0.4);
+    transform: translateY(-2px);
+}
+
+.date-input.error {
+    border-color: #ff4444;
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+    animation: shake 0.4s ease-in-out;
+}
+
+.date-input.success {
+    border-color: #00C851;
+    box-shadow: 0 0 10px rgba(0, 200, 81, 0.5);
+}
+
+.separator {
+    font-size: 30px;
+    margin: 0 5px;
+    font-family: var(--font-heading);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Button Base Styles */
+button {
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Specific Buttons */
+#submitDate,
+#finishQuiz,
+#startButton {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+}
+
+#submitDate:hover,
+#finishQuiz:hover,
+#startButton:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(233, 30, 99, 0.6);
+}
+
+#submitDate:active,
+#finishQuiz:active,
+#startButton:active {
+    transform: translateY(1px);
+}
+
+/* Main Action Button (Blue) */
 #valentinesButton {
     display: none;
     position: absolute;
-    background-color: #2d2dff;
-    border: 2px solid #2d2dff;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-hover));
     color: #fff;
-    cursor: pointer;
-    height: 50px;
-    font-size: 16px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    border-radius: 10px;
-    top: calc(50% + 150px); /* Adjust based on canvas height and text position */
+    padding: 0 35px;
+    height: 55px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    top: calc(50% + 180px);
     left: 50%;
     transform: translateX(-50%);
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-  }
+    box-shadow: 0 4px 15px rgba(45, 45, 255, 0.4);
+    z-index: 1000;
+}
 
-  #valentinesButton:hover {
-    background-color: #1f1faa;
-    color: #eee;
+#valentinesButton:hover {
+    transform: translateX(-50%) translateY(-3px);
+    box-shadow: 0 8px 25px rgba(45, 45, 255, 0.6);
+}
+
+/* Start Button Positioning */
+#startButton {
+    display: none;
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
+    border: none;
+}
+
+#startButton:hover {
+    transform: translateX(-50%) translateY(-3px) scale(1.05);
+}
+
+/* Quiz Container */
+#quizContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2000;
+    color: white;
+    width: 90%;
+    max-width: 600px;
+
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: var(--glass-shadow);
+
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Question Text */
+#questionText {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    font-family: var(--font-heading);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.3;
+}
+
+/* Options */
+#optionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.option-btn:hover {
+    background: rgba(233, 30, 99, 0.15);
+    border-color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.option-btn.correct {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: #4CAF50;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+}
+
+.option-btn.wrong {
+    background: rgba(244, 67, 54, 0.2);
+    border-color: #f44336;
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.4);
+}
+
+/* Score Screen */
+#scoreContainer h2 {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+#scoreText {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* Map Container */
+#mapContainer {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 400px;
+    z-index: 3000;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: var(--glass-shadow);
+    overflow: hidden;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+}
+
+/* Heart SVG Container */
+.heart-marker {
+    width: 40px;
+    height: 40px;
+    transform-origin: center;
+}
+
+/* Final Heart Container */
+#finalHeartContainer {
+    display: none;
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 60vw;
+    height: 60vh;
+    max-width: 600px;
+    max-height: 600px;
+    z-index: 5000;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+#finalHeart {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#finalHeart svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 30px rgba(233, 30, 99, 0.8));
+}
+
+#heartMessage {
+    position: relative;
+    z-index: 1;
+
+    width: 75%;
+    /* Thu hẹp chiều ngang */
+    margin-bottom: 30px;
+    /* Đẩy chữ lên trên cao một chút bằng margin dưới */
+    color: white;
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    text-align: center;
+    padding: 40px;
+    line-height: 1.6;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    max-width: 80%;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -45%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    #loginContainer {
+        width: 85%;
+        padding: 30px 20px;
+    }
+
+    #loginTitle {
+        font-size: 2.2rem;
+    }
+
+    .input-group {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .date-input {
+        width: 32px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    #quizContainer {
+        width: 85%;
+        padding: 30px 20px;
+    }
+
+    #questionText {
+        font-size: 1.5rem;
+    }
+
+    #heartMessage {
+        font-size: 1.8rem;
+        padding: 20px;
+    }
+
+    #mapContainer {
+        width: 90%;
+        height: 300px;
+        padding: 15px;
+    }
+
+    #finalHeartContainer {
+        width: 80vw;
+        height: 80vw;
+        max-width: 400px;
+        max-height: 400px;
+    }
 }
