@@ -378,12 +378,12 @@ function drawText() {
 
     if (frameNumber < 250) {
         context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
-        context.fillText("I love you so much, my huni", canvas.width / 2, canvas.height / 2);
+        context.fillText("I love you so much, my Huni", canvas.width / 2, canvas.height / 2);
         opacity = opacity + 0.01;
     }
     if (frameNumber >= 250 && frameNumber < 500) {
         context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
-        context.fillText("I love you so much, my huni", canvas.width / 2, canvas.height / 2);
+        context.fillText("I love you so much, my Huni", canvas.width / 2, canvas.height / 2);
         opacity = opacity - 0.01;
     }
 
@@ -476,9 +476,9 @@ function drawText() {
         context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
 
         if (window.innerWidth < 600) {
-            drawTextWithLineBreaks(["And I know I'm not a perfect guy,", "maybe not even in the same league as you yet"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+            drawTextWithLineBreaks(["And I know I'm not a perfect guy neither,", "maybe not even in the same league as you yet"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
         } else {
-            context.fillText("And I know I'm not a perfect guy, maybe not even in the same league as you yet", canvas.width / 2, canvas.height / 2);
+            context.fillText("And I know I'm not a perfect guy neither, maybe not even in the same league as you yet", canvas.width / 2, canvas.height / 2);
         }
 
         opacity = opacity + 0.01;
@@ -487,9 +487,9 @@ function drawText() {
         context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
 
         if (window.innerWidth < 600) {
-            drawTextWithLineBreaks(["And I know I'm not a perfect guy,", "maybe not even in the same league as you yet"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+            drawTextWithLineBreaks(["And I know I'm not a perfect guy neither,", "maybe not even in the same league as you yet"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
         } else {
-            context.fillText("And I know I'm not a perfect guy, maybe not even in the same league as you yet", canvas.width / 2, canvas.height / 2);
+            context.fillText("And I know I'm not a perfect guy neither, maybe not even in the same league as you yet", canvas.width / 2, canvas.height / 2);
         }
 
         opacity = opacity - 0.01;
@@ -511,16 +511,20 @@ function drawText() {
         opacity = opacity + 0.01;
     }
 
+    if (frameNumber == 2750) {
+        opacity = 0;
+    }
+
     if (frameNumber >= 2750 && frameNumber < 99999) {
-        context.fillStyle = `rgba(255, 105, 180, ${secondOpacity})`;
+        context.fillStyle = `rgba(255, 105, 180, ${thirdOpacity})`;
+        context.fillText("Happy Valentine's Day <3", canvas.width / 2, (canvas.height / 2 + 60));
 
-        if (window.innerWidth < 600) {
-            drawTextWithLineBreaks(["Happy Valentine's Day my love", "I miss you so much"], canvas.width / 2, (canvas.height / 2 + 60), fontSize, lineHeight);
-        } else {
-            context.fillText("Happy Valentine's Day my love I miss you so much", canvas.width / 2, (canvas.height / 2 + 50));
+        if (thirdOpacity < 1) thirdOpacity += 0.01;
+
+        // Hiển thị bảng hỏi khi dòng chữ cuối cùng đã hiện rõ
+        if (thirdOpacity >= 1 && loveContainer.style.display === "none" && currentLoveLevel === 0) {
+            loveContainer.style.display = "block";
         }
-
-        secondOpacity = secondOpacity + 0.01;
     }
 
 
@@ -704,6 +708,49 @@ function expandFinalHeart() {
         }
     });
 }
+
+// --- Dữ liệu hội thoại ---
+const loveLevels = [
+    { title: "Do you love me?", btn: "Yes i love you" },
+    { title: "I love you more!", btn: "I love you most" },
+    { title: "I love you more than you love me most!", btn: "I love you most than you love me more than i love you most" },
+    { title: "I love you more than you love me most than you love me more than i love you most!", btn: "I love you the mostest in the world!" }
+];
+let currentLoveLevel = 0;
+
+// --- Xử lý sự kiện nút bấm ---
+const loveContainer = document.getElementById("loveQuestionContainer");
+const questionTitle = document.getElementById("questionTitle");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+
+yesBtn.addEventListener("click", () => {
+    currentLoveLevel++;
+    if (currentLoveLevel < loveLevels.length) {
+        questionTitle.innerText = loveLevels[currentLoveLevel].title;
+        yesBtn.innerText = loveLevels[currentLoveLevel].btn;
+    } else {
+        // Kết thúc chuỗi hội thoại
+        questionTitle.innerText = "Okay than we both love eachother so muchh, happy valentine day my Huni ❤️";
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
+
+        // Sau 3-4 giây thì hiển thị bản đồ (Map) hoặc Trái tim lớn
+        setTimeout(() => {
+            loveContainer.style.display = "none";
+            initMap(); // Kích hoạt phần Map của bạn
+        }, 4000);
+    }
+});
+
+// Nút NO tinh nghịch (Chạy trốn)
+noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
 
 finishQuizButton.addEventListener('click', () => {
     gameState = STATE_MAP;
