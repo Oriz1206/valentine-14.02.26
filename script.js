@@ -455,12 +455,14 @@ function expandFinalHeart() {
     });
 }
 
-// --- XỬ LÝ LOVE QUESTION ---
+/// --- XỬ LÝ LOVE QUESTION ---
 yesBtn.addEventListener("click", () => {
     currentLoveLevel++;
     if (currentLoveLevel < loveLevels.length) {
         questionTitleEl.innerText = loveLevels[currentLoveLevel].title;
         yesBtn.innerText = loveLevels[currentLoveLevel].btn;
+
+        // Reset nút No về lại vị trí cũ bên cạnh nút Yes
         noBtn.style.position = "";
         noBtn.style.left = "";
         noBtn.style.top = "";
@@ -473,13 +475,11 @@ yesBtn.addEventListener("click", () => {
         gameState = STATE_HEART;
         initHeart();
 
-        // ==========================================
-        // ĐÃ SỬA: LÀM BIẾN MẤT KHUNG HOÀN TOÀN
-        // ==========================================
-        loveQuestionContainer.style.background = "none"; // Xóa bỏ hoàn toàn nền (bao gồm cả gradient nếu có)
+        // Xóa hoàn toàn background của khung
+        loveQuestionContainer.style.background = "none";
         loveQuestionContainer.style.backgroundColor = "transparent";
-        loveQuestionContainer.style.backdropFilter = "none"; // QUAN TRỌNG: Xóa hiệu ứng làm mờ (blur)
-        loveQuestionContainer.style.WebkitBackdropFilter = "none"; // Hỗ trợ xóa blur trên trình duyệt Safari
+        loveQuestionContainer.style.backdropFilter = "none";
+        loveQuestionContainer.style.WebkitBackdropFilter = "none";
         loveQuestionContainer.style.border = "none";
         loveQuestionContainer.style.boxShadow = "none";
     }
@@ -491,13 +491,17 @@ noBtn.addEventListener("mouseover", () => {
     const btnWidth = noBtn.offsetWidth;
     const btnHeight = noBtn.offsetHeight;
 
-    // Thuật toán của bạn đã rất tốt để giữ nút không bị văng ra khỏi màn hình
+    // 1. Tính toán tọa độ ngẫu nhiên an toàn trong màn hình
     const randomX = Math.random() * (windowWidth - btnWidth - 50) + 25;
     const randomY = Math.random() * (windowHeight - btnHeight - 50) + 25;
 
+    // 2. Lấy tọa độ của khung cha để bù trừ (Tuyệt chiêu chống chạy mất)
+    const containerRect = loveQuestionContainer.getBoundingClientRect();
+
+    // 3. Cho nút bay đi
     noBtn.style.position = "fixed";
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
+    noBtn.style.left = (randomX - containerRect.left) + "px";
+    noBtn.style.top = (randomY - containerRect.top) + "px";
 });
 
 // --- MAIN DRAW LOOP (QUAN TRỌNG) ---
