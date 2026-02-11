@@ -1,13 +1,58 @@
 [
   {
     "id": 1,
-    "question": "Lần đầu mình gặp nhau là ở đâu?",
+    "question": "Which app do we use the most to stay connected?",
     "options": {
-      "A": "Quán cà phê",
-      "B": "Sân bay",
-      "C": "Công viên",
-      "D": "Trường học"
+      "A": "Messenger",
+      "B": "Facebook",
+      "C": "Instagram",
+      "D": "TikTok",
+      "E": "Zalo"
     },
-    "answer": "B"
+    "answer": "A"
+  },
+  {
+    "id": 2,
+    "question": "What does Bubi miss most about Huni when we are apart?",
+    "options": {
+      "A": "Huni's smile",
+      "B": "Huni's eyes",
+      "C": "Huni's voice",
+      "D": "Huni's touch"
+    },
+    "answer": "D"
+  },
+  {
+    "id": 3,
+    "question": "Who usually falls asleep first during our late-night video calls?",
+    "options": {
+      "A": "Definitely Bubi",
+      "B": "Always Huni",
+      "C": "Both of us at the same time",
+      "D": "Neither, we talk until sunrise"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 4,
+    "question": "What was the longest video call we ever had?",
+    "options": {
+      "A": "3 days",
+      "C": "5 days",
+      "B": "7 days",
+      "D": "We lost count!"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 5,
+    "question": "How many kilometers are currently between us?",
+    "options": {
+      "A": "67km",
+      "B": "289km",
+      "C": "364km",
+      "D": "346km"
+    },
+    "answer": "C"
   }
 ]
