@@ -1,3 +1,3 @@
 # Valentine Website
 
-A valentine website for huni
+A valentine website for Huni
