@@ -98,6 +98,7 @@ const STATE_LOGIN = -1;
 const STATE_HEART = 0;
 const STATE_QUIZ = 1;
 const STATE_TEXT = 2;
+const STATE_MAP = 3;
 
 let gameState = STATE_LOGIN;
 let heartParticles = [];
@@ -339,8 +340,10 @@ function draw() {
         drawHeartParticles();
     } else if (gameState === STATE_QUIZ) {
         // Just background stars
+    } else if (gameState === STATE_MAP) {
+        // Map is visible, just stars in background
     } else if (gameState === STATE_TEXT) {
-        // drawText();
+        drawText();
         if (frameNumber < 99999) {
             frameNumber++;
         }
@@ -355,16 +358,190 @@ window.addEventListener("resize", function () {
     baseFrame = context.getImageData(0, 0, window.innerWidth, window.innerHeight);
 });
 
+function drawTextWithLineBreaks(lines, x, y, fontSize, lineHeight) {
+    lines.forEach((line, index) => {
+        context.fillText(line, x, y + index * (fontSize + lineHeight));
+    });
+}
+
+function drawText() {
+    var fontSize = Math.min(30, window.innerWidth / 24); // Adjust font size based on screen width
+    var lineHeight = 8;
+
+    context.font = (fontSize + 10) + "px 'Great Vibes', cursive";
+    context.textAlign = "center";
+
+    context.shadowColor = "rgba(255, 105, 180, 0.8)";
+    context.shadowBlur = 8;
+    context.shadowOffsetX = 0;
+    context.shadowOffsetY = 0;
+
+    if (frameNumber < 250) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+        context.fillText("I love you so much, my huni", canvas.width / 2, canvas.height / 2);
+        opacity = opacity + 0.01;
+    }
+    if (frameNumber >= 250 && frameNumber < 500) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+        context.fillText("I love you so much, my huni", canvas.width / 2, canvas.height / 2);
+        opacity = opacity - 0.01;
+    }
+
+    if (frameNumber == 500) {
+        opacity = 0;
+    }
+
+    if (frameNumber > 500 && frameNumber < 750) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["It's sad that I can't be with you", "this Valentine's like other couples"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("It's sad that I can't be with you this Valentine's like other couples", canvas.width / 2, canvas.height / 2);
+        }
+
+        opacity = opacity + 0.01;
+    }
+    if (frameNumber >= 750 && frameNumber < 1000) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["It's sad that I can't be with you", "this Valentine's like other couples"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("It's sad that I can't be with you this Valentine's like other couples", canvas.width / 2, canvas.height / 2);
+        }
+
+        opacity = opacity - 0.01;
+    }
+
+    if (frameNumber == 1000) {
+        opacity = 0;
+    }
+
+    if (frameNumber > 1000 && frameNumber < 1250) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["Yeah, sometimes I am a bit dumb...", "I mean really, really dumb"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("Yeah, sometimes I am a bit dumb... I mean really, really dumb", canvas.width / 2, canvas.height / 2);
+        }
+
+        opacity = opacity + 0.01;
+    }
+    if (frameNumber >= 1250 && frameNumber < 1500) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["Yeah, sometimes I am a bit dumb...", "I mean really, really dumb"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("Yeah, sometimes I am a bit dumb... I mean really, really dumb", canvas.width / 2, canvas.height / 2);
+        }
+
+        opacity = opacity - 0.01;
+    }
+
+    if (frameNumber == 1500) {
+        opacity = 0;
+    }
+
+    if (frameNumber > 1500 && frameNumber < 1750) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["I know that's made you mad at me,", "but at least that is why you love me right? Hehe"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("I know that's made you mad, but at least that is why you love me right? Hehe", canvas.width / 2, canvas.height / 2);
+        }
+
+        opacity = opacity + 0.01;
+    }
+    if (frameNumber >= 1750 && frameNumber < 2000) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["I know that's made you mad at me,", "but at least that is why you love me right? Hehe"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("I know that's made you mad, but at least that is why you love me right? Hehe", canvas.width / 2, canvas.height / 2);
+        }
+
+        opacity = opacity - 0.01;
+    }
+
+    if (frameNumber == 2000) {
+        opacity = 0;
+    }
+
+    if (frameNumber > 2000 && frameNumber < 2250) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["And I know I'm not a perfect guy,", "maybe not even in the same league as you yet"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("And I know I'm not a perfect guy, maybe not even in the same league as you yet", canvas.width / 2, canvas.height / 2);
+        }
+
+        opacity = opacity + 0.01;
+    }
+    if (frameNumber >= 2250 && frameNumber < 2500) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["And I know I'm not a perfect guy,", "maybe not even in the same league as you yet"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("And I know I'm not a perfect guy, maybe not even in the same league as you yet", canvas.width / 2, canvas.height / 2);
+        }
+
+        opacity = opacity - 0.01;
+    }
+
+    if (frameNumber == 2500) {
+        opacity = 0;
+    }
+
+    if (frameNumber > 2500 && frameNumber < 99999) {
+        context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
+
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["But I'm doing my best every day,", "knowing it will all count someday"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("But I'm doing my best every day, knowing it will all count someday", canvas.width / 2, canvas.height / 2);
+        }
+
+        opacity = opacity + 0.01;
+    }
+
+    if (frameNumber >= 2750 && frameNumber < 99999) {
+        context.fillStyle = `rgba(255, 105, 180, ${secondOpacity})`;
+
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["Happy Valentine's Day my love", "I miss you so much"], canvas.width / 2, (canvas.height / 2 + 60), fontSize, lineHeight);
+        } else {
+            context.fillText("Happy Valentine's Day my love I miss you so much", canvas.width / 2, (canvas.height / 2 + 50));
+        }
+
+        secondOpacity = secondOpacity + 0.01;
+    }
+
+
+
+    context.shadowColor = "transparent";
+    context.shadowBlur = 0;
+    context.shadowOffsetX = 0;
+    context.shadowOffsetY = 0;
+}
+
+
 window.requestAnimationFrame(draw);
 
 let map = null;
-let frankfurtMarker = null; // Trái tim đích (đứng yên)
-let munichMarker = null;    // Trái tim di chuyển
+let frankfurtMarker = null; // Frankfurt
+let munichMarker = null;    // Munich
 let polyline = null;
 
 // City coordinates
-const frankfurt = [50.1014, 8.5488]; // ĐIỂM ĐẾN (Neo đường kẻ tại đây)
-const munich = [48.0390, 11.5234];    // ĐIỂM XUẤT PHÁT
+const frankfurt = [50.1014, 8.5488]; // Frankfurt
+const munich = [48.0390, 11.5234];    // Munich
 const midpoint = [(frankfurt[0] + munich[0]) / 2, (frankfurt[1] + munich[1]) / 2];
 
 // Create heart SVG icon
@@ -380,7 +557,6 @@ function createHeartIcon(size = 40) {
     });
 }
 
-// Initialize map
 function initMap() {
     const mapContainer = document.getElementById('mapContainer');
     mapContainer.style.display = 'block';
@@ -400,9 +576,6 @@ function initMap() {
         attribution: ''
     }).addTo(map);
 
-    // --- SỬA ĐỔI 1: Đảo ngược thứ tự vẽ ---
-    // Vẽ từ Frankfurt (cố định) tới Munich (di động)
-    // Để các nét đứt được "neo" tại Frankfurt, không bị trôi khi tim di chuyển
     polyline = L.polyline([frankfurt, munich], {
         color: '#e91e63',
         weight: 3,
@@ -410,20 +583,16 @@ function initMap() {
         dashArray: '10, 10'
     }).addTo(map);
 
-    // Create heart markers
     frankfurtMarker = L.marker(frankfurt, { icon: createHeartIcon() }).addTo(map);
     munichMarker = L.marker(munich, { icon: createHeartIcon() }).addTo(map);
 
-    // Start animation sequence
     setTimeout(() => startHeartAnimation(), 500);
 }
 
-// Animate hearts
 function startHeartAnimation() {
     const startHeartElem = munichMarker.getElement().querySelector('svg');
     const destHeartElem = frankfurtMarker.getElement().querySelector('svg');
 
-    // Phase 1: Pulse
     anime({
         targets: [startHeartElem, destHeartElem],
         scale: [1, 1.2, 1],
@@ -432,13 +601,11 @@ function startHeartAnimation() {
         loop: 2
     });
 
-    // Phase 2: Start moving
     setTimeout(() => {
         animateJourney(munich, frankfurt, 4000);
     }, 2000);
 }
 
-// Hàm xử lý di chuyển và rút ngắn đường kẻ
 function animateJourney(startLatLng, endLatLng, duration) {
     const startTime = performance.now();
 
@@ -446,18 +613,12 @@ function animateJourney(startLatLng, endLatLng, duration) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
-        // 1. Tính toán vị trí hiện tại của trái tim (Interpolation)
         const currentLat = startLatLng[0] + (endLatLng[0] - startLatLng[0]) * progress;
         const currentLng = startLatLng[1] + (endLatLng[1] - startLatLng[1]) * progress;
         const currentPos = [currentLat, currentLng];
 
-        // 2. Cập nhật vị trí trái tim Munich (cho nó chạy)
         munichMarker.setLatLng(currentPos);
 
-        // --- SỬA ĐỔI 2: Cập nhật đường kẻ ---
-        // Luôn vẽ từ Frankfurt (Đích) -> Vị trí hiện tại
-        // Điều này giúp đoạn đường tại Frankfurt giữ nguyên
-        // Và đoạn đường tại chân trái tim Munich bị thu ngắn lại
         polyline.setLatLngs([endLatLng, currentPos]);
 
         if (progress < 1) {
@@ -470,46 +631,33 @@ function animateJourney(startLatLng, endLatLng, duration) {
     requestAnimationFrame(frame);
 }
 
-// Phase 3: Kết thúc hành trình - Hợp nhất, Đập 3 lần và Chuyển cảnh
 function finishJourney() {
-    // 1. Dọn dẹp: Xóa tim Munich và đường kẻ ngay lập tức
     map.removeLayer(munichMarker);
     map.removeLayer(polyline);
 
-    // Lấy phần tử SVG của tim Frankfurt để làm hiệu ứng
     const destHeartElement = frankfurtMarker.getElement().querySelector('svg');
 
-    // 2. Hiệu ứng tim đập 3 lần
     anime({
         targets: destHeartElement,
-        // Hiệu ứng nhịp tim: Tăng lên 1.4 lần rồi về lại 1
         scale: [
             { value: 1.4, duration: 400, easing: 'easeOutQuad' },
             { value: 1, duration: 400, easing: 'easeInQuad' }
         ],
-        loop: 3, // Lặp lại đúng 3 lần (3 nhịp đập)
-
-        // 3. Sau khi đập xong 3 lần thì mới chuyển cảnh
+        loop: 3,
         complete: () => {
-            // Xóa nốt tim Frankfurt để tránh bị trùng lặp khi tim to hiện lên
             map.removeLayer(frankfurtMarker);
-
-            // Gọi hàm phóng to tim và hiện chữ (Hàm bạn đã cung cấp)
             expandFinalHeart();
         }
     });
 }
 
-// Expand final heart to cover viewport
 function expandFinalHeart() {
     const mapContainer = document.getElementById('mapContainer');
     const finalHeartContainer = document.getElementById('finalHeartContainer');
     const heartMessage = document.getElementById('heartMessage');
 
-    // Show final heart container
     finalHeartContainer.style.display = 'block';
 
-    // Fade out map
     anime({
         targets: mapContainer,
         opacity: 0,
@@ -517,7 +665,6 @@ function expandFinalHeart() {
         easing: 'easeOutQuad'
     });
 
-    // Animate final heart
     anime({
         targets: finalHeartContainer,
         scale: [0, 1],
@@ -525,10 +672,7 @@ function expandFinalHeart() {
         duration: 2000,
         easing: 'easeOutElastic(1, .6)',
         complete: () => {
-            // Hide map container completely
             mapContainer.style.display = 'none';
-
-            // Animate message text
             anime({
                 targets: heartMessage,
                 opacity: [0, 1],
@@ -537,7 +681,6 @@ function expandFinalHeart() {
                 easing: 'easeOutQuad',
                 delay: 750,
                 complete: () => {
-                    // After 3.5 seconds total, fade out the heart
                     setTimeout(() => {
                         anime({
                             targets: finalHeartContainer,
@@ -547,6 +690,12 @@ function expandFinalHeart() {
                             easing: 'easeInQuad',
                             complete: () => {
                                 finalHeartContainer.style.display = 'none';
+                                // Start final text animation after heart fades out
+                                gameState = STATE_TEXT;
+                                frameNumber = 0;
+                                opacity = 0;
+                                secondOpacity = 0;
+                                thirdOpacity = 0;
                             }
                         });
                     }, 5000);
@@ -556,12 +705,9 @@ function expandFinalHeart() {
     });
 }
 
-// Modify finishQuiz button to trigger map animation
 finishQuizButton.addEventListener('click', () => {
-    gameState = STATE_TEXT;
+    gameState = STATE_MAP;
     quizContainer.style.display = 'none';
-
-    // Start map animation instead of text animation
     setTimeout(() => {
         initMap();
     }, 500);
