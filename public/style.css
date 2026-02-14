@@ -31,7 +31,6 @@ canvas {
     background: #111;
 }
 
-/* Common Overlay Styles */
 .overlay-container {
     position: absolute;
     top: 50%;
@@ -51,7 +50,6 @@ canvas {
     animation: fadeIn 0.8s ease-out;
 }
 
-/* Login (Date) Container */
 #loginContainer {
     position: absolute;
     top: 50%;
@@ -126,7 +124,6 @@ canvas {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Button Base Styles */
 button {
     font-family: var(--font-body);
     font-weight: 600;
@@ -139,7 +136,6 @@ button {
     overflow: hidden;
 }
 
-/* Specific Buttons */
 #submitDate,
 #finishQuiz,
 #startButton {
@@ -164,7 +160,6 @@ button {
     transform: translateY(1px);
 }
 
-/* Main Action Button (Blue) */
 #valentinesButton {
     display: none;
     position: absolute;
@@ -186,7 +181,6 @@ button {
     box-shadow: 0 8px 25px rgba(45, 45, 255, 0.6);
 }
 
-/* Start Button Positioning */
 #startButton {
     display: none;
     position: absolute;
@@ -201,7 +195,6 @@ button {
     transform: translateX(-50%) translateY(-3px) scale(1.05);
 }
 
-/* Quiz Container */
 #quizContainer {
     position: absolute;
     top: 50%;
@@ -224,7 +217,6 @@ button {
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* Question Text */
 #questionText {
     font-family: var(--font-heading);
     font-size: 2.8rem;
@@ -237,7 +229,6 @@ button {
     letter-spacing: 1px;
 }
 
-/* Options */
 #optionsContainer {
     display: flex;
     flex-direction: column;
@@ -273,7 +264,6 @@ button {
     box-shadow: 0 0 15px rgba(244, 67, 54, 0.4);
 }
 
-/* Score Screen */
 #scoreContainer h2 {
     font-family: var(--font-heading);
     font-size: 3rem;
@@ -286,7 +276,6 @@ button {
     opacity: 0.9;
 }
 
-/* Map Container */
 #mapContainer {
     display: none;
     position: fixed;
@@ -312,14 +301,12 @@ button {
     border-radius: 16px;
 }
 
-/* Heart SVG Container */
 .heart-marker {
     width: 40px;
     height: 40px;
     transform-origin: center;
 }
 
-/* Final Heart Container */
 #finalHeartContainer {
     display: none;
     position: fixed;
@@ -359,9 +346,7 @@ button {
     z-index: 1;
 
     width: 75%;
-    /* Thu hẹp chiều ngang */
     margin-bottom: 30px;
-    /* Đẩy chữ lên trên cao một chút bằng margin dưới */
     color: white;
     font-family: var(--font-heading);
     font-size: 2.5rem;
@@ -374,7 +359,6 @@ button {
     transform: translateY(20px);
 }
 
-/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -415,7 +399,6 @@ button {
     }
 }
 
-/* Responsive adjustments */
 @media (max-width: 600px) {
     #loginContainer {
         width: 85%;
@@ -465,18 +448,13 @@ button {
     }
 }
 
-/* Love Question Container - Reusing Login Style */
 #loveQuestionContainer {
     position: fixed;
-    /* Fixed để luôn ở giữa màn hình */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     z-index: 6000;
-    /* Cao hơn tất cả */
-
-    /* Glassmorphism style giống loginContainer */
     color: var(--text-color);
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
@@ -503,76 +481,56 @@ button {
     justify-content: center;
     gap: 20px;
     position: relative;
-    /* Để nút No tính toán vị trí ban đầu */
     min-height: 60px;
-    /* Giữ khoảng trống tránh bị nhảy layout */
 }
 
 #yesBtn {
     background: #e91e63;
-    /* Giữ màu hồng chủ đạo */
     color: white;
-    /* Thêm màu chữ trắng cho dễ đọc */
     font-size: 1.2rem;
     padding: 12px 30px;
     border-radius: 50px;
-    /* Kế thừa viền bo tròn */
     box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
-    /* Thêm đổ bóng hồng */
     z-index: 10;
 }
 
 #yesBtn:hover {
     transform: translateY(-2px) scale(1.02);
-    /* Hiệu ứng nảy lên giống nút chính */
     box-shadow: 0 6px 20px rgba(233, 30, 99, 0.6);
 }
 
-/* Nút NO */
 #noBtn {
     background: #555;
-    /* Giữ màu xám */
     color: white;
     font-size: 1.2rem;
     padding: 12px 30px;
     border-radius: 50px;
-    /* Kế thừa viền bo tròn */
     box-shadow: 0 4px 15px rgba(85, 85, 85, 0.4);
-    /* Thêm đổ bóng xám đồng bộ */
     z-index: 10;
     transition: all 0.1s;
-    /* Giữ nguyên chuyển động nhanh (thường dùng làm nút né chuột) */
 }
 
 #noBtn:hover {
     transform: translateY(-2px) scale(1.02);
-    /* Hiệu ứng nảy lên */
     box-shadow: 0 6px 20px rgba(85, 85, 85, 0.6);
 }
 
-/* Chỉnh khung SoundCloud thành hình dạng như 1 nút bấm (Pill Button) */
 .soundcloud-container {
     position: fixed;
     top: 20px;
     right: 20px;
     width: 160px;
-    /* Thu hẹp chiều ngang vừa đủ hiển thị nút Play và tên bài */
     height: 34px;
-    /* Chiều cao siêu nhỏ bằng 1 cái nút */
     z-index: 9999;
     border-radius: 50px;
-    /* Bo tròn viền tuyệt đối */
     overflow: hidden;
     background: rgba(255, 255, 255, 0.9);
-    /* Nền trắng sáng để khớp với player SoundCloud */
     box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
     padding: 6px 15px;
-    /* Căn lề cho player bên trong */
     display: flex;
     align-items: center;
     transition: all 0.3s ease;
     border: 2px solid rgba(233, 30, 99, 0.3);
-    /* Viền màu hồng nhạt đồng bộ */
 }
 
 .soundcloud-container:hover {

@@ -1,15 +1,12 @@
-// --- CẤU HÌNH & KHỞI TẠO CANVAS ---
 var canvas = document.getElementById("starfield");
 var context = canvas.getContext("2d");
 
-// Cập nhật kích thước canvas ngay lập tức
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    initStars(); // Tạo lại sao khi resize để không bị méo
+    initStars();
 }
 
-// --- BIẾN TOÀN CỤC & DỮ LIỆU ---
 var stars = 500;
 var colorrange = [0, 60, 240];
 var starArray = [];
@@ -29,8 +26,8 @@ const STATE_LOVE_QUESTION = 4;
 let gameState = STATE_LOGIN;
 let heartParticles = [];
 
-// Dữ liệu Love Question
 const loveLevels = [
+    { title: "Will you be my Valentine? 🌹", btn: "Yes, I will! ❤️" },
     { title: "Do you love me?", btn: "Okay, yes I love you" },
     { title: "I love you more!", btn: "I love you most" },
     { title: "I love you more than you love me most!", btn: "I love you most than you love me more than i love you most" },
@@ -39,7 +36,6 @@ const loveLevels = [
 ];
 let currentLoveLevel = 0;
 
-// --- LẤY CÁC ELEMENT TỪ DOM ---
 const startButton = document.getElementById("startButton");
 const loginContainer = document.getElementById("loginContainer");
 const submitDateButton = document.getElementById("submitDate");
@@ -55,7 +51,6 @@ const questionTitleEl = document.getElementById("questionTitle");
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 
-// --- XỬ LÝ SAO (STARS) ---
 function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -91,8 +86,7 @@ function updateStars() {
     }
 }
 
-// --- XỬ LÝ LOGIN (NGÀY THÁNG) ---
-// Auto-focus input
+
 dateInputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         input.value = input.value.replace(/[^0-9]/g, '');
@@ -134,7 +128,6 @@ submitDateButton.addEventListener("click", () => {
     }
 });
 
-// --- XỬ LÝ HEART ANIMATION (MỞ ĐẦU) ---
 let mouseX = 0;
 let mouseY = 0;
 document.addEventListener('mousemove', (e) => {
@@ -149,7 +142,6 @@ function initHeart() {
     let attempts = 0;
     let boundary = [];
 
-    // Tạo hình trái tim
     for (let t = 0; t < Math.PI * 2; t += 0.02) {
         const scale = 15;
         let x = 16 * Math.pow(Math.sin(t), 3);
@@ -228,7 +220,6 @@ function drawHeartParticles() {
     });
 }
 
-// --- XỬ LÝ QUIZ ---
 let questions = [];
 let score = 0;
 let currentQuestionIndex = 0;
@@ -288,7 +279,6 @@ function checkAnswer(selectedKey, correctKey, btnElement) {
     }, 1500);
 }
 
-// Nút Start Journey -> Vào Quiz
 startButton.addEventListener('click', () => {
     gameState = STATE_QUIZ;
     startButton.style.display = 'none';
@@ -296,7 +286,6 @@ startButton.addEventListener('click', () => {
     showQuestion(0);
 });
 
-// Nút Finish Quiz -> Vào Map
 finishQuizButton.addEventListener('click', () => {
     gameState = STATE_MAP;
     quizContainer.style.display = 'none';
@@ -305,7 +294,6 @@ finishQuizButton.addEventListener('click', () => {
     }, 500);
 });
 
-// --- XỬ LÝ MAP (LEAFLET) & TRANSITION ---
 let map = null;
 let frankfurtMarker = null;
 let munichMarker = null;
@@ -441,7 +429,6 @@ function expandFinalHeart() {
                             easing: 'easeInQuad',
                             complete: () => {
                                 finalHeartContainer.style.display = 'none';
-                                // Chuyển sang Text Animation
                                 gameState = STATE_TEXT;
                                 frameNumber = 0;
                                 opacity = 0;
@@ -455,14 +442,12 @@ function expandFinalHeart() {
     });
 }
 
-/// --- XỬ LÝ LOVE QUESTION ---
 yesBtn.addEventListener("click", () => {
     currentLoveLevel++;
     if (currentLoveLevel < loveLevels.length) {
         questionTitleEl.innerText = loveLevels[currentLoveLevel].title;
         yesBtn.innerText = loveLevels[currentLoveLevel].btn;
 
-        // Reset nút No về lại vị trí cũ bên cạnh nút Yes
         noBtn.style.position = "";
         noBtn.style.left = "";
         noBtn.style.top = "";
@@ -471,11 +456,10 @@ yesBtn.addEventListener("click", () => {
         yesBtn.style.display = "none";
         noBtn.style.display = "none";
 
-        // Quay lại hiệu ứng tim
         gameState = STATE_HEART;
         initHeart();
 
-        // Xóa hoàn toàn background của khung
+        // Xóa style nền để nhìn rõ trái tim
         loveQuestionContainer.style.background = "none";
         loveQuestionContainer.style.backgroundColor = "transparent";
         loveQuestionContainer.style.backdropFilter = "none";
@@ -491,22 +475,15 @@ noBtn.addEventListener("mouseover", () => {
     const btnWidth = noBtn.offsetWidth;
     const btnHeight = noBtn.offsetHeight;
 
-    // 1. Tính toán tọa độ ngẫu nhiên an toàn trong màn hình
     const randomX = Math.random() * (windowWidth - btnWidth - 50) + 25;
     const randomY = Math.random() * (windowHeight - btnHeight - 50) + 25;
 
-    // 2. Lấy tọa độ của khung cha để bù trừ (Tuyệt chiêu chống chạy mất)
     const containerRect = loveQuestionContainer.getBoundingClientRect();
-
-    // 3. Cho nút bay đi
     noBtn.style.position = "fixed";
     noBtn.style.left = (randomX - containerRect.left) + "px";
     noBtn.style.top = (randomY - containerRect.top) + "px";
 });
 
-// --- MAIN DRAW LOOP (QUAN TRỌNG) ---
-
-// Hàm vẽ text hỗ trợ xuống dòng
 function drawTextWithLineBreaks(lines, x, y, fontSize, lineHeight) {
     lines.forEach((line, index) => {
         context.fillText(line, x, y + index * (fontSize + lineHeight));
@@ -522,7 +499,6 @@ function drawText() {
     context.shadowColor = "rgba(255, 105, 180, 0.8)";
     context.shadowBlur = 8;
 
-    // Logic vẽ text theo frameNumber
     if (frameNumber < 250) {
         context.fillStyle = `rgba(255, 105, 180, ${opacity})`;
         context.fillText("I love you so much, my Huni", canvas.width / 2, canvas.height / 2);
@@ -605,15 +581,15 @@ function drawText() {
         secondOpacity += 0.01;
     }
 
-    // CHUYỂN CẢNH SANG LOVE QUESTION
     if (frameNumber > 3300 && gameState !== STATE_LOVE_QUESTION) {
         gameState = STATE_LOVE_QUESTION;
         loveQuestionContainer.style.display = "block";
+        questionTitleEl.innerText = loveLevels[0].title;
+        yesBtn.innerText = loveLevels[0].btn;
         opacity = 0;
         secondOpacity = 0;
     }
 
-    // Reset shadow để không ảnh hưởng frame sau (QUAN TRỌNG)
     context.shadowColor = "transparent";
     context.shadowBlur = 0;
     context.shadowOffsetX = 0;
