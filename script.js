@@ -27,6 +27,7 @@ let gameState = STATE_LOGIN;
 let heartParticles = [];
 
 const loveLevels = [
+    { title: "Will you be my Valentine? 🌹", btn: "Yes, I will! ❤️" },
     { title: "Do you love me?", btn: "Okay, yes I love you" },
     { title: "I love you more!", btn: "I love you most" },
     { title: "I love you more than you love me most!", btn: "I love you most than you love me more than i love you most" },
@@ -458,6 +459,7 @@ yesBtn.addEventListener("click", () => {
         gameState = STATE_HEART;
         initHeart();
 
+        // Xóa style nền để nhìn rõ trái tim
         loveQuestionContainer.style.background = "none";
         loveQuestionContainer.style.backgroundColor = "transparent";
         loveQuestionContainer.style.backdropFilter = "none";
@@ -582,6 +584,8 @@ function drawText() {
     if (frameNumber > 3300 && gameState !== STATE_LOVE_QUESTION) {
         gameState = STATE_LOVE_QUESTION;
         loveQuestionContainer.style.display = "block";
+        questionTitleEl.innerText = loveLevels[0].title;
+        yesBtn.innerText = loveLevels[0].btn;
         opacity = 0;
         secondOpacity = 0;
     }
